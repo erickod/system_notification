@@ -1,0 +1,23 @@
+# .coveragerc to control coverage.py
+[run]
+branch = True
+omit =
+    */__init__.py
+    */conftest.py
+    */tests/*
+    */protocols/*
+    */iterfaces/*
+
+
+
+[report]
+exclude_lines =
+    .*__str__.*
+omit =
+    */__init__.py
+    */conftest.py
+    */tests/*
+    */protocols/*
+    */iterfaces/*
+
+ignore_errors = True
