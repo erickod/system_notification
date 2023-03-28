@@ -18,6 +18,14 @@ class BaseNotification:
     def mark_as_sent(self) -> None:
         self._is_sent = True
 
+    def set_vars(self, vars: Dict[str, str]) -> None:
+        self._vars = vars
+
+    def get_text(self, apply_vars: bool = True) -> str:
+        if self.vars and apply_vars:
+            return self.content.format(**self.vars)
+        return self.content
+
     @property
     def is_sent(self) -> bool:
         return self._is_sent

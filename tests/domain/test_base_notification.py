@@ -3,7 +3,9 @@ import pytest
 from system_notification.domain import BaseNotification
 
 title = "My Notification"
-content = "Hello! This is a basic notification"
+vars = {"full_name": "John Duo"}
+content = "Hello, {full_name}! This is a basic notification"
+final_text = "Hello, John Duo! This is a basic notification"
 
 
 @pytest.mark.parametrize(
@@ -25,3 +27,20 @@ async def test_mark_as_sent_method() -> None:
     sut = BaseNotification(title=title, content=content)
     sut.mark_as_sent()
     assert sut.is_sent
+
+
+async def test_get_text_should_replace_string_placeholders_using_vars_values() -> None:
+    sut = BaseNotification(title=title, content=content)
+    sut.set_vars(vars)
+    assert sut.get_text() == final_text
+
+
+async def test_get_text_should_not_replace_string_placeholders_when_apply_vars_flag_is_false() -> None:
+    sut = BaseNotification(title=title, content=content)
+    sut.set_vars(vars)
+    assert sut.get_text(apply_vars=False) == content
+
+
+async def test_get_text_should_return_the_raw_text_if_no_vars_was_setted() -> None:
+    sut = BaseNotification(title=title, content=content)
+    assert sut.get_text() == content
