@@ -1,8 +1,10 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any, Dict, List, Literal, Optional
+from typing import Any, Dict, Literal, Optional
 
-from system_notification.domain.notification_target import NotificationTarget
+from system_notification.domain.notifications.notification_target import (
+    NotificationTarget,
+)
 
 
 @dataclass

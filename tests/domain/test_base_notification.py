@@ -1,7 +1,7 @@
 import pytest
 
 from system_notification.domain import BaseNotification
-from system_notification.domain.base_notification import NotificationTarget
+from system_notification.domain.notifications import NotificationTarget
 
 title = "My Notification"
 vars = {"full_name": "John Duo"}

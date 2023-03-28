@@ -1,4 +1,4 @@
-from system_notification.domain.base_notification import NotificationTarget
+from system_notification.domain.notifications import NotificationTarget
 
 
 async def test_notification_target_instantiation_parmas() -> None:

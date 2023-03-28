@@ -1,1 +1,1 @@
-from .base_notification import BaseNotification
+from .notifications.base_notification import BaseNotification
