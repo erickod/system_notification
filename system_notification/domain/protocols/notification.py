@@ -1,8 +1,12 @@
 from datetime import datetime
-from typing import Any, List, Protocol
+from typing import Any, Dict, List, Protocol
 
 
 class Notification(Protocol):
+    @property
+    def vars(self) -> Dict[str, str]:
+        pass
+
     @property
     def is_sent(self) -> bool:
         pass
@@ -20,7 +24,7 @@ class Notification(Protocol):
     def can_be_sent_at(self, date: datetime) -> bool:
         pass
 
-    def set_vars(vars: Any) -> None:
+    def set_vars(self, vars: Dict[str, str]) -> None:
         pass
 
     def get_targets(self) -> List[str]:

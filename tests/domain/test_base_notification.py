@@ -16,6 +16,7 @@ async def test_instatiation_params(priority, expected_priority) -> None:
     assert sut.content == content
     assert sut.is_sent == False
     assert sut.priority == expected_priority
+    assert sut.vars == {}
     with pytest.raises(NotImplementedError):
         assert sut.is_scheduled == False
 

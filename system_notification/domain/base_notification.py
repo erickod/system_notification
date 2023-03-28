@@ -1,5 +1,6 @@
+from copy import deepcopy
 from dataclasses import dataclass
-from typing import Literal
+from typing import Dict, Literal
 
 
 @dataclass
@@ -10,6 +11,7 @@ class BaseNotification:
 
     def __post_init__(self) -> None:
         self._is_sent: bool = False
+        self._vars: Dict[str, str] = {}
         if not self.priority or type(self.priority) != int:
             self.priority = 0
 
@@ -23,3 +25,7 @@ class BaseNotification:
     @property
     def is_scheduled(self) -> bool:
         raise NotImplementedError
+
+    @property
+    def vars(self) -> Dict[str, str]:
+        return deepcopy(self._vars)
