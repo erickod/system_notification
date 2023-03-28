@@ -54,3 +54,4 @@ async def test_add_target() -> None:
     sut.add_target(target)
     assert target in sut
     assert target_not_in_sut not in sut
+    assert sut.target == target

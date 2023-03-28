@@ -33,6 +33,10 @@ class BaseNotification:
         self._target = target
 
     @property
+    def target(self) -> Optional[NotificationTarget]:
+        return self._target
+
+    @property
     def is_sent(self) -> bool:
         return self._is_sent
 
