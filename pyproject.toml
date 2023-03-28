@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Erick Duarte <erickod@gmail.com>"]
 readme = "README.md"
-packages = [{include = "system_notifcation"}]
+packages = [{include = "system_notification"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -24,6 +24,7 @@ coverage = "^7.2.2"
 commitizen = "^2.42.1"
 pre-commit = "^3.2.1"
 pytest-watch = "^4.2.0"
+mutpy = "^0.6.1"
 
 [build-system]
 requires = ["poetry-core"]
