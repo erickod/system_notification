@@ -1,6 +1,7 @@
 import pytest
 
 from system_notification.domain import BaseNotification
+from system_notification.domain.base_notification import NotificationTarget
 
 title = "My Notification"
 vars = {"full_name": "John Duo"}
@@ -44,3 +45,12 @@ async def test_get_text_should_not_replace_string_placeholders_when_apply_vars_f
 async def test_get_text_should_return_the_raw_text_if_no_vars_was_setted() -> None:
     sut = BaseNotification(title=title, content=content)
     assert sut.get_text() == content
+
+
+async def test_add_target() -> None:
+    target = NotificationTarget(_type="slack_channel", _target="tech_logs")
+    target_not_in_sut = NotificationTarget(_type="any", _target="any")
+    sut = BaseNotification(title=title, content=content)
+    sut.add_target(target)
+    assert target in sut
+    assert target_not_in_sut not in sut

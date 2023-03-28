@@ -1,6 +1,6 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Dict, Literal
+from typing import Any, Dict, List, Literal, Optional
 
 
 @dataclass
@@ -29,6 +29,7 @@ class BaseNotification:
     def __post_init__(self) -> None:
         self._is_sent: bool = False
         self._vars: Dict[str, str] = {}
+        self._target: Optional[NotificationTarget] = None
         if not self.priority or type(self.priority) != int:
             self.priority = 0
 
@@ -43,6 +44,9 @@ class BaseNotification:
             return self.content.format(**self.vars)
         return self.content
 
+    def add_target(self, target: NotificationTarget) -> None:
+        self._target = target
+
     @property
     def is_sent(self) -> bool:
         return self._is_sent
@@ -54,3 +58,6 @@ class BaseNotification:
     @property
     def vars(self) -> Dict[str, str]:
         return deepcopy(self._vars)
+
+    def __contains__(self, other: Any) -> bool:
+        return other == self._target
