@@ -10,9 +10,7 @@ class BaseNotification:
 
     def __post_init__(self) -> None:
         self._is_sent: bool = False
-        if not self.priority:
-            self.priority = 0
-        if type(self.priority) != int:
+        if not self.priority or type(self.priority) != int:
             self.priority = 0
 
     def mark_as_sent(self) -> None:
