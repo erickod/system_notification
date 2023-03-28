@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "system-notifcation"
+version = "0.1.0"
+description = ""
+authors = ["Erick Duarte <erickod@gmail.com>"]
+readme = "README.md"
+packages = [{include = "system_notifcation"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.0"
+dynaconf = "^3.1.12"
+httpx = "^0.23.3"
+uvicorn = "^0.21.1"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.1.1"
+black = "^23.1.0"
+pytest = "^7.2.2"
+pytest-asyncio = "^0.21.0"
+pytest-cov = "^4.0.0"
+coverage = "^7.2.2"
+commitizen = "^2.42.1"
+pre-commit = "^3.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
