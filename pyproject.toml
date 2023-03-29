@@ -12,6 +12,8 @@ fastapi = "^0.95.0"
 dynaconf = "^3.1.12"
 httpx = "^0.23.3"
 uvicorn = "^0.21.1"
+slack-sdk = "^3.20.2"
+aiohttp = "^3.8.4"
 
 
 [tool.poetry.group.dev.dependencies]
