@@ -1,5 +1,4 @@
 from copy import deepcopy
-from dataclasses import dataclass
 from typing import Any, Dict, Literal, Optional
 
 from system_notification.domain.notifications.base_notification import BaseNotification
