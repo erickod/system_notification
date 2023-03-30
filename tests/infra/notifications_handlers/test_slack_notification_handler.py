@@ -46,6 +46,7 @@ async def test_ensure_send_method_calls_chat_postMessage_from_client():
     sut = SlackNotificationHandler(token=token, client=client)
     await sut.send(notification)
     assert client.chat_postMessage_is_called
+    assert notification.is_sent
 
 
 async def test_when_the_server_responded_with_an_error_the_handler_should_raises_RuntimeError():

@@ -24,3 +24,4 @@ class SlackNotificationHandler:
             assert response["ok"]
         except SlackApiError as err:
             raise RuntimeError(err)
+        notification.mark_as_sent()
