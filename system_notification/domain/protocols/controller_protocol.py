@@ -18,5 +18,5 @@ class Controller(Protocol):
     def __init__(self, http_server: HttpServer) -> None:
         ...
 
-    def handle(self, request: HttpRequest) -> HttpResponse:
+    async def handle(self, request: HttpRequest) -> HttpResponse:
         ...
