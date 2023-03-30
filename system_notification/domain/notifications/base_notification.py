@@ -1,7 +1,7 @@
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar
+from typing import Any, Dict, List, Literal, Optional, TypeVar
 
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
@@ -11,7 +11,7 @@ T = TypeVar("T", covariant=True)
 
 
 @dataclass
-class BaseNotification(Generic[T]):
+class BaseNotification:
     title: str
     content: str
     priority: Literal[0, 1, 2, 3] = 0
