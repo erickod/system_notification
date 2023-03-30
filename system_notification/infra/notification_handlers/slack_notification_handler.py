@@ -10,6 +10,7 @@ class SlackNotificationHandler:
     def __init__(self, token: str, client=WebClient) -> None:
         self._token = token
         self._client = client(token=token)
+        self.target_type = "slack_channel"
 
     async def send(self, notification: SlackNotification) -> None:
         # TODO: find a way to notification make a self validation
