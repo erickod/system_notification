@@ -1,3 +1,4 @@
 from .http_client_protocol import HttpClient
 from .notification_factory_protocol import NotificationFactory
 from .notification_protocol import Notification
+from .notification_sender import NotificationSender
