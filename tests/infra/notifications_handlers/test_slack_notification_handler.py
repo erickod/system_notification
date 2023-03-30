@@ -3,14 +3,15 @@ from typing import Any, Dict, Tuple
 import pytest
 from slack_sdk.errors import SlackApiError
 
-from system_notification.domain.notifications.slack_notification import (
-    SlackNotification,
+from system_notification.domain.notifications import BaseNotification
+from system_notification.domain.notifications.notification_target import (
+    NotificationTarget,
 )
 from system_notification.infra.notification_handlers import SlackNotificationHandler
 
 token = "ANY VALID SLACK API TOKEN"
-notification = SlackNotification(title="My Notification", content="Thats works!")
-notification.add_target("tech_logs")
+notification = BaseNotification(title="My Notification", content="Thats works!")
+notification.add_target(NotificationTarget("slack_channel", "tech_logs"))
 
 
 class SlackFakeClient:

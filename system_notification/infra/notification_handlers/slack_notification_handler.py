@@ -1,9 +1,7 @@
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-from system_notification.domain.notifications.slack_notification import (
-    SlackNotification,
-)
+from system_notification.domain.notifications.base_notification import BaseNotification
 
 
 class SlackNotificationHandler:
@@ -12,7 +10,7 @@ class SlackNotificationHandler:
         self._client = client(token=token)
         self.target_type = "slack_channel"
 
-    async def send(self, notification: SlackNotification) -> None:
+    async def send(self, notification: BaseNotification) -> None:
         # TODO: find a way to notification make a self validation
         assert notification.target, "O target da notificação não pode estar vazio"
         try:
