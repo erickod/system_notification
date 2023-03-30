@@ -2,7 +2,7 @@ import inspect
 from typing import Any, Self
 from unittest.mock import AsyncMock
 
-from system_notification.infra.http_client.aiohttp_adapter import AioHttpAdapter
+from system_notification.infra.http.client.aiohttp_adapter import AioHttpAdapter
 
 
 class ClientSessionFake:

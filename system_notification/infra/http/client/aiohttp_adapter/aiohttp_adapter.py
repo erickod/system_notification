@@ -3,7 +3,7 @@ from typing import Any, Coroutine, Optional
 
 import aiohttp
 
-from system_notification.infra.http_client.aiohttp_adapter.protocols import (
+from system_notification.infra.http.client.aiohttp_adapter.protocols import (
     ClientSession,
 )
 
