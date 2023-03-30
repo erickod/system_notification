@@ -1,14 +1,17 @@
 from copy import deepcopy
 from dataclasses import dataclass
-from typing import Any, Dict, Literal, Optional
+from datetime import datetime
+from typing import Any, Dict, Generic, List, Literal, Optional, TypeVar
 
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
 )
 
+T = TypeVar("T", covariant=True)
+
 
 @dataclass
-class BaseNotification:
+class BaseNotification(Generic[T]):
     title: str
     content: str
     priority: Literal[0, 1, 2, 3] = 0
@@ -44,6 +47,18 @@ class BaseNotification:
 
     @property
     def is_scheduled(self) -> bool:
+        raise NotImplementedError
+
+    def can_be_sent_at(self, date: datetime) -> bool:
+        raise NotImplementedError
+
+    def get_targets(self) -> List[str]:
+        raise NotImplementedError
+
+    def is_scheduled_to(self, date: datetime) -> bool:
+        raise NotImplementedError
+
+    def schedule(self, date: datetime) -> bool:
         raise NotImplementedError
 
     @property

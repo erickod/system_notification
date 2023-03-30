@@ -1,5 +1,6 @@
 from copy import deepcopy
-from typing import Any, Dict, Literal, Optional
+from datetime import datetime
+from typing import Any, Dict, List, Literal, Optional
 
 from system_notification.domain.notifications.base_notification import BaseNotification
 from system_notification.domain.notifications.notification_target import (
@@ -38,6 +39,18 @@ class SlackNotification:
 
     @property
     def is_scheduled(self) -> bool:
+        raise NotImplementedError
+
+    def can_be_sent_at(self, date: datetime) -> bool:
+        raise NotImplementedError
+
+    def get_targets(self) -> List[str]:
+        raise NotImplementedError
+
+    def is_scheduled_to(self, date: datetime) -> bool:
+        raise NotImplementedError
+
+    def schedule(self, date: datetime) -> bool:
         raise NotImplementedError
 
     @property
