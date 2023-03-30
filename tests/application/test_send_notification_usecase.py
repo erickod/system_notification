@@ -24,6 +24,7 @@ class FakeNotificationSender:
     async def send(self, notification: Notification) -> None:
         self.notification = notification
         self.send_is_called = True
+        notification.mark_as_sent()
 
 
 class FakeTestingFactory:
@@ -40,7 +41,7 @@ class FakeTestingFactory:
         return self.sender
 
 
-async def test_ensure_execute_calls_send_from_sender() -> None:
+async def test_ensure_execute_method() -> None:
     input = SendNotificationInput(
         title="Any Title",
         content="Any Content",
@@ -50,5 +51,6 @@ async def test_ensure_execute_calls_send_from_sender() -> None:
     notification_factory_caller = NotificationFactoryCaller()
     notification_factory_caller.add_factory(FakeTestingFactory(sender))
     sut = SendNotificationUseCase(factory_caller=notification_factory_caller)
-    await sut.execute(input)
+    output = await sut.execute(input)
     assert sender.send_is_called
+    assert output.sent

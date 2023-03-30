@@ -42,4 +42,4 @@ class SendNotificationUseCase:
         notification.add_target(target=input.target)
         notification.set_vars(input.placeholders)
         await sender.send(notification)
-        return SendNotificationOutput(False)
+        return SendNotificationOutput(sent=notification.is_sent, target=input.target)
