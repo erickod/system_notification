@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Any, Dict, List, Protocol
+from typing import Any, Dict, List, Protocol, TypeVar, runtime_checkable
 
 
+@runtime_checkable
 class Notification(Protocol):
     @property
     def vars(self) -> Dict[str, str]:
