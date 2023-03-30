@@ -1,9 +1,12 @@
 from datetime import datetime
-from typing import Any, Dict, List, Protocol, TypeVar, runtime_checkable
+from typing import Any, Dict, List, Literal, Protocol, runtime_checkable
 
 
 @runtime_checkable
 class Notification(Protocol):
+    def __init__(self, title: str, content: str, priority: Literal[0, 1, 2, 3]) -> None:
+        pass
+
     @property
     def vars(self) -> Dict[str, str]:
         pass
