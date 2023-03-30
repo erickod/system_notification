@@ -1,6 +1,7 @@
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
+from system_notification.domain.exceptions.notification_error import TargetNotFound
 from system_notification.domain.notifications.base_notification import BaseNotification
 
 
@@ -23,5 +24,14 @@ class SlackNotificationHandler:
             )
             assert response["ok"]
         except SlackApiError as err:
-            raise RuntimeError(err)
+            raise TargetNotFound(
+                {
+                    "is_sent": False,
+                    "destin": {
+                        "target_type": notification.target.type,
+                        "target": notification.target.target,
+                    },
+                    "detail": err.response.get("error", "unknow error"),
+                }
+            )
         notification.mark_as_sent()

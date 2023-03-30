@@ -3,6 +3,7 @@ from typing import Any, Dict, Tuple
 import pytest
 from slack_sdk.errors import SlackApiError
 
+from system_notification.domain.exceptions.notification_error import TargetNotFound
 from system_notification.domain.notifications import BaseNotification
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
@@ -16,7 +17,9 @@ notification.add_target(NotificationTarget("slack_channel", "tech_logs"))
 
 class SlackFakeClient:
     def __init__(
-        self, as_success: bool = True, raises_with: Tuple[str, str] | Tuple = ()
+        self,
+        as_success: bool = True,
+        raises_with: Tuple[str, Dict[str, str]] | Tuple = (),
     ) -> None:
         self.raises_with = raises_with
         self.as_success = as_success
@@ -50,9 +53,7 @@ async def test_ensure_send_method_calls_chat_postMessage_from_client():
 
 
 async def test_when_the_server_responded_with_an_error_the_handler_should_raises_RuntimeError():
-    client = SlackFakeClient(
-        as_success=True, raises_with=("token_error", "invalid API token")
-    )
+    client = SlackFakeClient(as_success=True, raises_with=("token_error", {}))
     sut = SlackNotificationHandler(token=token, client=client)
-    with pytest.raises(RuntimeError):
+    with pytest.raises(TargetNotFound) as e:
         await sut.send(notification)
