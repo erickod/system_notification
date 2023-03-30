@@ -22,11 +22,12 @@ def get_query_params_as_dict(request: Request) -> Dict[Any, Any]:
 
 
 class FastApiHttpServer:
-    def __init__(self) -> None:
-        self._app = FastAPI()
+    def __init__(self, server=uvicorn, app=FastAPI()) -> None:
+        self._app = app
+        self._server = server
 
     def serve(self, port: int = 8000) -> None:
-        uvicorn.run(self._app, port=port)
+        self._server.run(self._app, port=port)
 
     def on(self, method: str, url: str, controller: Controller) -> None:
         async def fastapit_controller(
@@ -37,7 +38,7 @@ class FastApiHttpServer:
                 body=await self.__get_body(request),
                 params=params,
             )
-            response = controller.handle(application_request)
+            response = await controller.handle(application_request)
             return JSONResponse(
                 content=response.body,
                 status_code=response.status_code,
@@ -49,5 +50,6 @@ class FastApiHttpServer:
 
     async def __get_body(self, request: Request) -> Dict[Any, Any]:
         with contextlib.suppress(json.decoder.JSONDecodeError):
-            return await request.json()
+            data = await request.json()
+            return data
         return {}
