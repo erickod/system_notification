@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, Literal, Optional
+from typing import Dict, List, Literal, Optional
 
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
@@ -13,7 +13,7 @@ from system_notification.domain.protocols.notification_protocol import Notificat
 class SendNotificationInput:
     title: str
     content: str
-    target: NotificationTarget
+    target: List[NotificationTarget] = field(default_factory=list)
     priority: Literal[0, 1, 2, 3] = 0
     placeholders: Dict[str, str] = field(default_factory=dict)
 
@@ -28,18 +28,26 @@ class SendNotificationUseCase:
     def __init__(self, factory_caller: FactoryCaller) -> None:
         self._factory_caller = factory_caller
 
-    async def execute(self, input: SendNotificationInput) -> SendNotificationOutput:
-        sender: Optional[NotificationSender] = await self._factory_caller.get_sender(
-            target=input.target
-        )
-        notification: Optional[
-            Notification
-        ] = await self._factory_caller.get_notification(
-            input.title, input.content, input.target, input.priority
-        )
-        assert sender
-        assert notification
-        notification.add_target(target=input.target)
-        notification.set_vars(input.placeholders)
-        await sender.send(notification)
-        return SendNotificationOutput(sent=notification.is_sent, target=input.target)
+    async def execute(
+        self, input: SendNotificationInput
+    ) -> List[SendNotificationOutput]:
+        output: List[SendNotificationOutput] = []
+        for target in input.target:
+            sender: Optional[
+                NotificationSender
+            ] = await self._factory_caller.get_sender(target=target)
+            notification: Optional[
+                Notification
+            ] = await self._factory_caller.get_notification(
+                input.title, input.content, target, input.priority
+            )
+            assert sender
+            assert notification
+            # TODO: create test to ensure notification.add_target is called with each target item from targets
+            notification.add_target(target=target)
+            notification.set_vars(input.placeholders)
+            await sender.send(notification)
+            output.append(
+                SendNotificationOutput(sent=notification.is_sent, target=target)
+            )
+        return output

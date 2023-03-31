@@ -78,7 +78,7 @@ async def test_ensure_usecase_is_called_with_right_params() -> None:
         SendNotificationInput(
             title="What is Lorem Ipsum?",
             content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-            target=NotificationTarget(_type="slack_channel", _target="tech_logs"),
+            target=[NotificationTarget(_type="slack_channel", _target="tech_logs")],
             priority=0,
             placeholders={},
         )
@@ -101,7 +101,7 @@ async def test_return_when_occur_target_error() -> None:
         SendNotificationInput(
             title="What is Lorem Ipsum?",
             content="Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-            target=NotificationTarget(_type="slack_channel", _target="tech_logs"),
+            target=[NotificationTarget(_type="slack_channel", _target="tech_logs")],
             priority=0,
             placeholders={},
         )

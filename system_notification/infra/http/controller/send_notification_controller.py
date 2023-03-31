@@ -1,5 +1,6 @@
 from copy import deepcopy
 from dataclasses import asdict
+from typing import List
 
 from system_notification.application.send_notification_usecase.send_notification_usecase import (
     SendNotificationInput,
@@ -40,27 +41,35 @@ class SendNotificationController:
             return await self._handle(request)
         except TargetNotFound as err:
             return HttpResponse(status_code=400, body={"error": err.args})
-        except Exception as err:
-            return HttpResponse(status_code=500, body={"error": err.args})
+        # except Exception as err:
+        #     print("exception::", err, err.__traceback__)
+        #     return HttpResponse(status_code=500, body={"error": err.args})
 
     async def _handle(self, request: HttpRequest) -> HttpResponse:
         notification = request.body.get("data", {})
-        first_target = notification.get("destin", [])[0]
+        targets: List[NotificationTarget] = [
+            NotificationTarget(
+                destin.get("type"),
+                destin.get("target"),
+            )
+            for destin in notification.get("destin", [])
+        ]
         input = SendNotificationInput(
             title=notification.get("title"),
             content=notification.get("content"),
             priority=notification.get("priority", 0),
-            target=NotificationTarget(
-                _type=first_target.get("type"), _target=first_target.get("target")
-            ),
+            target=targets,
         )
-        output = await self.send_notification.execute(input)
+        output_list = await self.send_notification.execute(input)
         return HttpResponse(
             status_code=202,
             body={
-                "data": {
-                    "notification_sent": output.sent,
-                    "sent_to": asdict(output.target),
-                }
+                "data": [
+                    {
+                        "notification_sent": output.sent,
+                        "sent_to": asdict(output.target),
+                    }
+                    for output in output_list
+                ]
             },
         )

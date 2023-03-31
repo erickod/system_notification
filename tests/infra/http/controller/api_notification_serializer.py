@@ -4,41 +4,41 @@ from typing import Any, Dict, List, Optional
 import pydantic
 
 
-class Destin(pydantic.BaseModel):
+class DestinSchema(pydantic.BaseModel):
     type: str
     target: str
 
 
-class Notification(pydantic.BaseModel):
+class NotificationSchema(pydantic.BaseModel):
     title: str
     content: str
-    destin: List[Destin]
+    destin: List[DestinSchema]
     priority: int = 0
 
 
-class APINotification(pydantic.BaseModel):
-    data: Notification
+class APINotificationSchema(pydantic.BaseModel):
+    data: NotificationSchema
 
 
 class ApiNotificationSerializer:
     def __init__(self) -> None:
         self.errors = {}
 
-    def from_raw(self, input: str | bytes) -> Optional[APINotification]:
+    def from_raw(self, input: str | bytes) -> Optional[APINotificationSchema]:
         try:
-            return APINotification.parse_raw(input)
+            return APINotificationSchema.parse_raw(input)
         except pydantic.error_wrappers.ValidationError as err:
             self.errors = json.loads(err.json())
         return None
 
-    def from_dict(self, input: Dict[str, Any]) -> Optional[APINotification]:
+    def from_dict(self, input: Dict[str, Any]) -> Optional[APINotificationSchema]:
         try:
-            return APINotification.parse_obj(input)
+            return APINotificationSchema.parse_obj(input)
         except pydantic.error_wrappers.ValidationError as err:
             self.errors = json.loads(err.json())
         return None
 
-    def to_dict(self, input: APINotification) -> Optional[APINotification]:
+    def to_dict(self, input: APINotificationSchema) -> Optional[APINotificationSchema]:
         try:
             return input.json()
         except pydantic.error_wrappers.ValidationError as err:
