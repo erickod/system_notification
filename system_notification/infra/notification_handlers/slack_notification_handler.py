@@ -34,4 +34,5 @@ class SlackNotificationHandler:
                     "detail": err.response.get("error", "unknow error"),
                 }
             )
+        notification.status = "sent"
         notification.mark_as_sent()

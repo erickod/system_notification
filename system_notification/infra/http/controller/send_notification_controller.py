@@ -66,7 +66,7 @@ class SendNotificationController:
             body={
                 "data": [
                     {
-                        "notification_sent": output.sent,
+                        "status": output.status,
                         "sent_to": asdict(output.target),
                     }
                     for output in output_list

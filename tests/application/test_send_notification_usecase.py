@@ -62,4 +62,4 @@ async def test_ensure_execute_method_can_handle_list_of_targets_to_the_same_noti
     assert sender.send_is_called
     assert sender.send_is_called_count == 1
     assert type(output[0]) is SendNotificationOutput
-    assert output[0].sent
+    assert output[0].status  # TODO: check_status

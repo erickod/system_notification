@@ -20,6 +20,7 @@ class BaseNotification:
         self._is_sent: bool = False
         self._vars: Dict[str, str] = {}
         self._target: Optional[NotificationTarget] = None
+        self._status: str = "filled"
         if not self.priority or type(self.priority) != int:
             self.priority = 0
 
@@ -36,6 +37,16 @@ class BaseNotification:
 
     def add_target(self, target: NotificationTarget) -> None:
         self._target = target
+
+    @property
+    def status(self) -> str:
+        return self._status
+
+    @status.setter
+    def status(self, status: str) -> None:
+        if status.lower() in ("queued", "sent"):
+            self._is_sent = True
+        self._status = status
 
     @property
     def target(self) -> Optional[NotificationTarget]:

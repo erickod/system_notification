@@ -20,7 +20,7 @@ class SendNotificationInput:
 
 @dataclass
 class SendNotificationOutput:
-    sent: bool
+    status: str
     target: Optional[NotificationTarget] = None
 
 
@@ -48,6 +48,6 @@ class SendNotificationUseCase:
             notification.set_vars(input.placeholders)
             await sender.send(notification)
             output.append(
-                SendNotificationOutput(sent=notification.is_sent, target=target)
+                SendNotificationOutput(status=notification.status, target=target)
             )
         return output
