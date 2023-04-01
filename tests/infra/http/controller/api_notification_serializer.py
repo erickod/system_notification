@@ -14,6 +14,7 @@ class NotificationSchema(pydantic.BaseModel):
     content: str
     destin: List[DestinSchema]
     priority: int = 0
+    placeholders: Dict[str, str] = {}
 
 
 class APINotificationSchema(pydantic.BaseModel):

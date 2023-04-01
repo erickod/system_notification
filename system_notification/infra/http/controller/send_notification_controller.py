@@ -59,6 +59,7 @@ class SendNotificationController:
             content=notification.get("content"),
             priority=notification.get("priority", 0),
             target=targets,
+            placeholders=notification.get("placeholders", {}),
         )
         output_list = await self.send_notification.execute(input)
         return HttpResponse(

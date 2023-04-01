@@ -44,6 +44,7 @@ class SendNotificationUseCase:
             assert sender
             assert notification
             # TODO: create test to ensure notification.add_target is called with each target item from targets
+            print("placeholders", input.placeholders)
             notification.add_target(target=target)
             notification.set_vars(input.placeholders)
             await sender.send(notification)
