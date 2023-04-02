@@ -1,0 +1,1 @@
+from .jwt_auth_controller_decorator import JWTAuthControllerDecorator

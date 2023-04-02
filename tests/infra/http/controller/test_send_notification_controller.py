@@ -7,6 +7,7 @@ from system_notification.domain.exceptions.notification_error import TargetNotFo
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
 )
+from system_notification.domain.protocols.controller_protocol import Controller
 from system_notification.infra.http.controller.send_notification_controller import (
     SendNotificationController,
 )
@@ -20,6 +21,12 @@ payload = {
         "priority": 0,
     }
 }
+
+
+def undecorate_controller(instance: Controller) -> Controller:
+    undecorated_method = getattr(instance.handle, "__wrapped__")
+    setattr(instance, "handle", undecorated_method)
+    return instance
 
 
 async def test_instantiation_params() -> None:
@@ -45,7 +52,8 @@ async def test_ensure_handle_calls_serialize_from_dict_method() -> None:
         send_notifcation_usecase=send_notifcation_usecase,
         serializer=serializer,
     )
-    await sut.handle(HttpRequest(headers={}, body={}, params={}))
+    undecorate_controller(sut)
+    await sut.handle(sut, HttpRequest(headers={}, body={}, params={}))
     serializer.from_dict.assert_called()
 
 
@@ -59,7 +67,8 @@ async def test_ensure_return_400_when_serialize_has_errors() -> None:
         send_notifcation_usecase=send_notifcation_usecase,
         serializer=serializer,
     )
-    response = await sut.handle(HttpRequest(headers={}, body=payload, params={}))
+    undecorate_controller(sut)
+    response = await sut.handle(sut, HttpRequest(headers={}, body={}, params={}))
     assert response.status_code == 400
 
 
@@ -73,7 +82,8 @@ async def test_ensure_usecase_is_called_with_right_params() -> None:
         send_notifcation_usecase=send_notifcation_usecase,
         serializer=serializer,
     )
-    await sut.handle(HttpRequest(headers={}, body=payload, params={}))
+    undecorate_controller(sut)
+    await sut.handle(sut, HttpRequest(headers={}, body=payload, params={}))
     send_notifcation_usecase.execute.assert_called_with(
         SendNotificationInput(
             title="What is Lorem Ipsum?",
@@ -96,7 +106,8 @@ async def test_return_when_occur_target_error() -> None:
         send_notifcation_usecase=send_notifcation_usecase,
         serializer=Mock(),
     )
-    await sut.handle(HttpRequest(headers={}, body=payload, params={}))
+    undecorate_controller(sut)
+    await sut.handle(sut, HttpRequest(headers={}, body=payload, params={}))
     send_notifcation_usecase.execute.assert_called_with(
         SendNotificationInput(
             title="What is Lorem Ipsum?",
