@@ -31,7 +31,7 @@ class SlackNotificationHandler:
                         "target_type": notification.target.type,
                         "target": notification.target.target,
                     },
-                    "detail": err.response.get("error", "unknow error"),
+                    "detail": err.response.get("error", "unknown error"),
                 }
             )
         notification.status = "sent"
