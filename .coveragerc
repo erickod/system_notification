@@ -9,6 +9,8 @@ omit =
     */protocols.py
     */iterfaces/*
     *fake*
+    *exceptions*
+    system_notification/config/*
 
 
 
@@ -25,5 +27,7 @@ omit =
     */protocols.py
     */iterfaces/*
     *fake*
+    *exceptions*
+    system_notification/config/*
 
 ignore_errors = True
