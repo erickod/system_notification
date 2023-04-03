@@ -8,11 +8,11 @@ class NotificationTarget:
 
     @property
     def type(self) -> str:
-        return self._type.lower()
+        return str(self._type).lower()
 
     @property
     def target(self) -> str:
-        return self._target.lower()
+        return str(self._target).lower()
 
     def __str__(self) -> str:
         return f"{self.type}:{self.target}"
