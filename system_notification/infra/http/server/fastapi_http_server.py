@@ -30,7 +30,7 @@ class FastApiHttpServer:
         self._server.run(self._app, port=port)
 
     def on(self, method: str, url: str, controller: Controller) -> None:
-        async def fastapit_controller(
+        async def fastapi_controller(
             request: Request, params: Dict[Any, Any] = Depends(get_query_params_as_dict)
         ) -> Any:
             application_request = HttpRequest(
@@ -45,7 +45,7 @@ class FastApiHttpServer:
             )
 
         self._app.add_api_route(
-            path=url, endpoint=fastapit_controller, methods=[method.upper()]
+            path=url, endpoint=fastapi_controller, methods=[method.upper()]
         )
 
     async def __get_body(self, request: Request) -> Dict[Any, Any]:
