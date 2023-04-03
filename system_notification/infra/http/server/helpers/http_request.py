@@ -10,7 +10,9 @@ class InsensitiveCaseDict(UserDict):
         return super().__getitem__(key)
 
     def __setitem__(self, key: Any, item: Any) -> Any:
-        self.data[key.lower()] = item
+        if type(key) is str:
+            self.data[key.lower()] = item
+        self.data[key] = item
 
 
 @dataclass
