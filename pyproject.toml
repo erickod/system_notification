@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "system_notification"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.8"
 fastapi = "^0.95.0"
 dynaconf = "^3.1.12"
 httpx = "^0.23.3"
