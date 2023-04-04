@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import pydantic
 
@@ -25,7 +25,7 @@ class ApiNotificationSerializer:
     def __init__(self) -> None:
         self.errors = {}
 
-    def from_raw(self, input: str | bytes) -> Optional[APINotificationSchema]:
+    def from_raw(self, input: Union[str, bytes]) -> Optional[APINotificationSchema]:
         try:
             return APINotificationSchema.parse_raw(input)
         except pydantic.error_wrappers.ValidationError as err:

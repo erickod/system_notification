@@ -1,4 +1,4 @@
-from typing import Literal, Protocol
+from typing import Literal, Optional, Protocol
 
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
@@ -14,7 +14,7 @@ class FactoryCaller(Protocol):
     def add_factory(self, factory: NotificationFactory) -> None:
         pass
 
-    async def get_sender(self, target: NotificationTarget) -> NotificationSender | None:
+    async def get_sender(self, target: NotificationTarget) -> Optional[NotificationSender]:
         pass
 
     async def get_notification(
@@ -23,5 +23,5 @@ class FactoryCaller(Protocol):
         content: str,
         destin: NotificationTarget,
         priority: Literal[0, 1, 2, 3] = 0,
-    ) -> Notification | None:
+    ) -> Optional[Notification]:
         pass

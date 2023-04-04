@@ -1,5 +1,5 @@
 import contextlib
-from typing import Dict, Literal
+from typing import Dict, Literal, Optional
 
 from system_notification.domain.exceptions.notification_error import TargetNotFound
 from system_notification.domain.notifications.notification_target import (
@@ -19,7 +19,7 @@ class NotificationFactoryCaller:
     def add_factory(self, factory: NotificationFactory) -> None:
         self._factories[factory.target_type] = factory
 
-    async def get_sender(self, target: NotificationTarget) -> NotificationSender | None:
+    async def get_sender(self, target: NotificationTarget) -> Optional[NotificationSender]:
         with contextlib.suppress(KeyError):
             factory = self._factories[target.type]
             return factory.make_sender()
@@ -40,7 +40,7 @@ class NotificationFactoryCaller:
         content: str,
         destin: NotificationTarget,
         priority: Literal[0, 1, 2, 3] = 0,
-    ) -> Notification | None:
+    ) -> Optional[Notification]:
         factory = self._factories[destin.type]
         return factory.make_notificaton(title, content, priority)
 

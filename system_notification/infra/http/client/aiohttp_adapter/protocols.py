@@ -1,4 +1,4 @@
-from typing import Any, Protocol, Self
+from typing import Any, Protocol
 
 
 class ClientSession(Protocol):
@@ -8,7 +8,7 @@ class ClientSession(Protocol):
     async def read(self, *args, **kwargs) -> Any:
         return
 
-    async def __aenter__(self) -> Self:
+    async def __aenter__(self) -> "ClientSession":
         return self
 
     async def __aexit__(self, *args, **kwargs) -> None:
