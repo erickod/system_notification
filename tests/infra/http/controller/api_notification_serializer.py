@@ -15,6 +15,7 @@ class NotificationSchema(pydantic.BaseModel):
     destin: List[DestinSchema]
     priority: int = 0
     placeholders: Dict[str, str] = {}
+    icon: str = ""
 
 
 class APINotificationSchema(pydantic.BaseModel):

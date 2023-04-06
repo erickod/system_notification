@@ -20,7 +20,7 @@ class SlackNotificationHandler:
                 channel=f"#{channel}",
                 text=notification.get_text(),
                 username=notification.title,
-                # icon_emoji=":blush:",
+                icon_emoji=notification.icon,
             )
             assert response["ok"]
         except SlackApiError as err:

@@ -15,6 +15,7 @@ class BaseNotification:
     title: str
     content: str
     priority: Literal[0, 1, 2, 3] = 0
+    icon: str = ""
 
     def __post_init__(self) -> None:
         self._is_sent: bool = False
@@ -29,6 +30,7 @@ class BaseNotification:
 
     def set_vars(self, vars: Dict[str, str]) -> None:
         self._vars = vars
+        self.title = self.title.format(**self.vars)
 
     def get_text(self, apply_vars: bool = True) -> str:
         if self.vars and apply_vars:

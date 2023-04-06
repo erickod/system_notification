@@ -16,6 +16,7 @@ class SendNotificationInput:
     target: List[NotificationTarget] = field(default_factory=list)
     priority: Literal[0, 1, 2, 3] = 0
     placeholders: Dict[str, str] = field(default_factory=dict)
+    icon: str = ""
 
 
 @dataclass
@@ -46,6 +47,7 @@ class SendNotificationUseCase:
             # TODO: create test to ensure notification.add_target is called with each target item from targets
             notification.add_target(target=target)
             notification.set_vars(input.placeholders)
+            notification.icon = input.icon
             await sender.send(notification)
             output.append(
                 SendNotificationOutput(status=notification.status, target=target)

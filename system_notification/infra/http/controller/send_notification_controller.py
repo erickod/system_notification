@@ -45,7 +45,7 @@ class SendNotificationController:
         except TargetNotFound as err:
             return HttpResponse(status_code=400, body={"error": err.args})
         # except Exception as err:
-        #     print("exception::", err, err.__traceback__)
+        #     print("exception::", err, err.__traceback__.)
         #     return HttpResponse(status_code=500, body={"error": err.args})
 
     async def _handle(self, request: HttpRequest) -> HttpResponse:
@@ -63,6 +63,7 @@ class SendNotificationController:
             priority=notification.get("priority", 0),
             target=targets,
             placeholders=notification.get("placeholders", {}),
+            icon=notification.get("icon"),
         )
         output_list = await self.send_notification.execute(input)
         return HttpResponse(
