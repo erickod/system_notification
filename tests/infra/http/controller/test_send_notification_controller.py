@@ -91,6 +91,7 @@ async def test_ensure_usecase_is_called_with_right_params() -> None:
             target=[NotificationTarget(_type="slack_channel", _target="tech_logs")],
             priority=0,
             placeholders={},
+            icon=None,
         )
     )
 
@@ -115,5 +116,6 @@ async def test_return_when_occur_target_error() -> None:
             target=[NotificationTarget(_type="slack_channel", _target="tech_logs")],
             priority=0,
             placeholders={},
+            icon=None,
         )
     )

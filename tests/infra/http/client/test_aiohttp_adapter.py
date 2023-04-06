@@ -1,5 +1,5 @@
 import inspect
-from typing import Any, Self
+from typing import Any
 from unittest.mock import AsyncMock
 
 from system_notification.infra.http.client.aiohttp_adapter import AioHttpAdapter
@@ -23,17 +23,17 @@ class ClientSessionFake:
     async def read(self) -> Any:
         self.read_is_called = True
 
-    async def __aenter__(self) -> Self:
+    async def __aenter__(self) -> "ClientSessionFake":
         return self
 
     async def __aexit__(self, *args, **kwargs) -> None:
         pass
 
 
-async def test_make_async_returns_a_coroutine() -> None:
+async def test_make_async_returns_an_object_where_json_mehod_is_a_couroutine() -> None:
     sut = AioHttpAdapter()
     output = await sut._make_async(data=AsyncMock())
-    assert inspect.iscoroutinefunction(output)
+    assert inspect.iscoroutinefunction(output.json)
 
 
 async def test_get_method_calls_make_request() -> None:

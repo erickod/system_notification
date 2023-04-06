@@ -1,4 +1,4 @@
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, Union
 
 import pytest
 from slack_sdk.errors import SlackApiError
@@ -19,7 +19,7 @@ class SlackFakeClient:
     def __init__(
         self,
         as_success: bool = True,
-        raises_with: Tuple[str, Dict[str, str]] | Tuple = (),
+        raises_with: Union[Tuple[str, Dict[str, str]], Tuple] = (),
     ) -> None:
         self.raises_with = raises_with
         self.as_success = as_success
