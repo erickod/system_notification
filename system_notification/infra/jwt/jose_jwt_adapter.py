@@ -9,7 +9,7 @@ from system_notification.domain.protocols.jwt_adapter_protocol import JWT_TYPES
 
 class JoseJWTAdapter:
     def __init__(
-        self, *, secret: str = SETTINGS.get("SECRET", ""), jwt_handler=jwt
+        self, *, secret: str = SETTINGS.get("STAGING__SECRET", ""), jwt_handler=jwt
     ) -> None:
         self._jwt = jwt_handler
         self._secret = secret
