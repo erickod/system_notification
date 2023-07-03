@@ -2,14 +2,13 @@ import contextlib
 from typing import Dict
 
 from jose import jwt
-
 from system_notification.config import SETTINGS
 from system_notification.domain.protocols.jwt_adapter_protocol import JWT_TYPES
 
 
 class JoseJWTAdapter:
     def __init__(
-        self, *, secret: str = SETTINGS.get("STAGING__SECRET", ""), jwt_handler=jwt
+        self, *, secret: str = SETTINGS.get("SECRET", ""), jwt_handler=jwt
     ) -> None:
         self._jwt = jwt_handler
         self._secret = secret
@@ -25,7 +24,7 @@ class JoseJWTAdapter:
         )
 
     def is_valid(self, data: str, verify_signature: bool = True) -> bool:
-        with contextlib.suppress(Exception):
+        with contextlib.suppress(Exception) as e:
             self.decode(data, verify_signature)
             return True
         return False

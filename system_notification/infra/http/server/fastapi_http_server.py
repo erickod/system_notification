@@ -44,8 +44,14 @@ class FastApiHttpServer:
                 status_code=response.status_code,
             )
 
+        def asdf(name: str = "any valid name") -> str:
+            return name
+
         self._app.add_api_route(
-            path=url, endpoint=fastapi_controller, methods=[method.upper()]
+            path=url,
+            endpoint=fastapi_controller,
+            methods=[method.upper()],
+            # dependencies=[Depends(lambda: None)],
         )
 
     async def __get_body(self, request: Request) -> Dict[Any, Any]:
