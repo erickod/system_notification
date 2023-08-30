@@ -7,6 +7,8 @@ from system_notification.domain.notifications.notification_target import (
 from system_notification.domain.protocols import NotificationSender
 from system_notification.domain.protocols.factory_caller_protocol import FactoryCaller
 from system_notification.domain.protocols.notification_protocol import Notification
+from system_notification.domain.exceptions.notification_error import TargetNotFound
+
 
 
 @dataclass
@@ -33,6 +35,13 @@ class SendNotificationUseCase:
         self, input: SendNotificationInput
     ) -> List[SendNotificationOutput]:
         output: List[SendNotificationOutput] = []
+        if not input.target:
+            raise TargetNotFound(
+                {
+                    "is_sent": False,
+                    "detail": "missing at least one target"
+                }
+            )
         for target in input.target:
             sender: Optional[
                 NotificationSender

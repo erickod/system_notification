@@ -8,8 +8,6 @@ settings = Dynaconf(
 )
 ENVIRON_TYPE = settings.get("environ_type", "dev")
 SETTINGS = settings.get(ENVIRON_TYPE) or defaultdict(lambda: "missing data")
-print(ENVIRON_TYPE)
-print(SETTINGS)
 
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
