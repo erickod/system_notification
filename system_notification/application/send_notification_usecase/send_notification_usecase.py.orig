@@ -10,7 +10,10 @@ from system_notification.domain.protocols.notification_protocol import Notificat
 from system_notification.domain.exceptions.notification_error import TargetNotFound
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin
 @dataclass
 class SendNotificationInput:
     title: str
@@ -37,7 +40,14 @@ class SendNotificationUseCase:
         output: List[SendNotificationOutput] = []
         if not input.target:
             raise TargetNotFound(
+<<<<<<< HEAD
                 {"is_sent": False, "detail": "missing at least one target"}
+=======
+                {
+                    "is_sent": False,
+                    "detail": "missing at least one target"
+                }
+>>>>>>> origin
             )
         for target in input.target:
             sender: Optional[

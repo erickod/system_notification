@@ -1,0 +1,6 @@
+<<<<<<< HEAD
+class TargetNotFound(Exception): ...
+=======
+class TargetNotFound(Exception):
+    ...
+>>>>>>> origin
