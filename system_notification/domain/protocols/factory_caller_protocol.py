@@ -14,7 +14,9 @@ class FactoryCaller(Protocol):
     def add_factory(self, factory: NotificationFactory) -> None:
         pass
 
-    async def get_sender(self, target: NotificationTarget) -> Optional[NotificationSender]:
+    async def get_sender(
+        self, target: NotificationTarget
+    ) -> Optional[NotificationSender]:
         pass
 
     async def get_notification(

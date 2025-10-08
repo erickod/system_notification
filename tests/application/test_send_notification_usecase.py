@@ -46,7 +46,9 @@ class FakeTestingFactory:
         return self.sender
 
 
-async def test_ensure_execute_method_can_handle_list_of_targets_to_the_same_notification() -> None:
+async def test_ensure_execute_method_can_handle_list_of_targets_to_the_same_notification() -> (
+    None
+):
     input = SendNotificationInput(
         title="Any Title",
         content="Any Content",

@@ -55,7 +55,9 @@ async def test_register_controller_calls_add_api_route_with_right_params() -> No
     fake_app.add_api_route.assert_called()
 
 
-async def test_ensure_fastapi_can_handle_controller_post_inside_its_inner_view() -> None:
+async def test_ensure_fastapi_can_handle_controller_post_inside_its_inner_view() -> (
+    None
+):
     app = FastAPI()
     sut = FastApiHttpServer(app=app)
     controller = FakeController(

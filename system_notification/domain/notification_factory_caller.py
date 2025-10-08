@@ -19,7 +19,9 @@ class NotificationFactoryCaller:
     def add_factory(self, factory: NotificationFactory) -> None:
         self._factories[factory.target_type] = factory
 
-    async def get_sender(self, target: NotificationTarget) -> Optional[NotificationSender]:
+    async def get_sender(
+        self, target: NotificationTarget
+    ) -> Optional[NotificationSender]:
         with contextlib.suppress(KeyError):
             factory = self._factories[target.type]
             return factory.make_sender()

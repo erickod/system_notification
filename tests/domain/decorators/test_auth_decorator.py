@@ -16,7 +16,9 @@ class FakeController:
         return self._response
 
 
-async def test_jwt_auth_validation_decorator_returns_controller_response_when_client_is_authenticated() -> None:
+async def test_jwt_auth_validation_decorator_returns_controller_response_when_client_is_authenticated() -> (
+    None
+):
     jwt_token = jwt_adapter.encode({"email": "mail@mail.com", "user": "John Duo"})
     response = HttpResponse(
         status_code=200,
@@ -30,7 +32,9 @@ async def test_jwt_auth_validation_decorator_returns_controller_response_when_cl
     assert response is output_response
 
 
-async def test_jwt_auth_validation_decorator_returns_status_401_when_client_is_not_authenticated() -> None:
+async def test_jwt_auth_validation_decorator_returns_status_401_when_client_is_not_authenticated() -> (
+    None
+):
     jwt_auth_validation = JWTAuthControllerDecorator(jwt_adapter=jwt_adapter)
     response = HttpResponse(
         status_code=200,
