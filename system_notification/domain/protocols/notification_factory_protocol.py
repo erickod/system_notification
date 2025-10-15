@@ -1,7 +1,11 @@
 from typing import Literal, Protocol, Tuple
 
-from system_notification.domain.protocols.notification_protocol import Notification
-from system_notification.domain.protocols.notification_sender import NotificationSender
+from system_notification.domain.protocols.notification_protocol import (
+    Notification,
+)
+from system_notification.domain.protocols.notification_sender import (
+    NotificationSender,
+)
 
 
 class NotificationFactory(Protocol):

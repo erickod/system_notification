@@ -15,4 +15,4 @@ class NotificationTarget:
         return str(self._target).lower()
 
     def __str__(self) -> str:
-        return f"{self.type}:{self.target}"
+        return f'{self.type}:{self.target}'

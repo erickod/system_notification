@@ -7,7 +7,7 @@ from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
 )
 
-T = TypeVar("T", covariant=True)
+T = TypeVar('T', covariant=True)
 
 
 @dataclass
@@ -15,13 +15,13 @@ class BaseNotification:
     title: str
     content: str
     priority: Literal[0, 1, 2, 3] = 0
-    icon: str = ""
+    icon: str = ''
 
     def __post_init__(self) -> None:
         self._is_sent: bool = False
         self._vars: Dict[str, str] = {}
         self._target: Optional[NotificationTarget] = None
-        self._status: str = "filled"
+        self._status: str = 'filled'
         if not self.priority or type(self.priority) != int:
             self.priority = 0
 
@@ -46,7 +46,7 @@ class BaseNotification:
 
     @status.setter
     def status(self, status: str) -> None:
-        if status.lower() in ("queued", "sent"):
+        if status.lower() in ('queued', 'sent'):
             self._is_sent = True
         self._status = status
 

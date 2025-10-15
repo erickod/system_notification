@@ -5,10 +5,15 @@ from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
 )
 from system_notification.domain.protocols import NotificationSender
-from system_notification.domain.protocols.factory_caller_protocol import FactoryCaller
-from system_notification.domain.protocols.notification_protocol import Notification
-from system_notification.domain.exceptions.notification_error import TargetNotFound
-
+from system_notification.domain.protocols.factory_caller_protocol import (
+    FactoryCaller,
+)
+from system_notification.domain.protocols.notification_protocol import (
+    Notification,
+)
+from system_notification.domain.exceptions.notification_error import (
+    TargetNotFound,
+)
 
 
 @dataclass
@@ -18,7 +23,7 @@ class SendNotificationInput:
     target: List[NotificationTarget] = field(default_factory=list)
     priority: Literal[0, 1, 2, 3] = 0
     placeholders: Dict[str, str] = field(default_factory=dict)
-    icon: str = ""
+    icon: str = ''
 
 
 @dataclass
@@ -37,10 +42,7 @@ class SendNotificationUseCase:
         output: List[SendNotificationOutput] = []
         if not input.target:
             raise TargetNotFound(
-                {
-                    "is_sent": False,
-                    "detail": "missing at least one target"
-                }
+                {'is_sent': False, 'detail': 'missing at least one target'}
             )
         for target in input.target:
             sender: Optional[
@@ -59,6 +61,8 @@ class SendNotificationUseCase:
             notification.icon = input.icon
             await sender.send(notification)
             output.append(
-                SendNotificationOutput(status=notification.status, target=target)
+                SendNotificationOutput(
+                    status=notification.status, target=target
+                )
             )
         return output

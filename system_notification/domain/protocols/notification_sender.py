@@ -1,6 +1,8 @@
 from typing import Protocol, runtime_checkable
 
-from system_notification.domain.protocols.notification_protocol import Notification
+from system_notification.domain.protocols.notification_protocol import (
+    Notification,
+)
 
 
 @runtime_checkable
