@@ -1,6 +1,6 @@
 from typing import Dict, Protocol, TypeVar
 
-JWT_TYPES = TypeVar("JWT_TYPES", str, bytes, int, float)
+JWT_TYPES = TypeVar('JWT_TYPES', str, bytes, int, float)
 
 
 class JWTAdapter(Protocol):

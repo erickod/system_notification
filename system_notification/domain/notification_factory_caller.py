@@ -1,15 +1,21 @@
 import contextlib
 from typing import Dict, Literal, Optional
 
-from system_notification.domain.exceptions.notification_error import TargetNotFound
+from system_notification.domain.exceptions.notification_error import (
+    TargetNotFound,
+)
 from system_notification.domain.notifications.notification_target import (
     NotificationTarget,
 )
 from system_notification.domain.protocols.notification_factory_protocol import (
     NotificationFactory,
 )
-from system_notification.domain.protocols.notification_protocol import Notification
-from system_notification.domain.protocols.notification_sender import NotificationSender
+from system_notification.domain.protocols.notification_protocol import (
+    Notification,
+)
+from system_notification.domain.protocols.notification_sender import (
+    NotificationSender,
+)
 
 
 class NotificationFactoryCaller:
@@ -19,18 +25,20 @@ class NotificationFactoryCaller:
     def add_factory(self, factory: NotificationFactory) -> None:
         self._factories[factory.target_type] = factory
 
-    async def get_sender(self, target: NotificationTarget) -> Optional[NotificationSender]:
+    async def get_sender(
+        self, target: NotificationTarget
+    ) -> Optional[NotificationSender]:
         with contextlib.suppress(KeyError):
             factory = self._factories[target.type]
             return factory.make_sender()
         raise TargetNotFound(
             {
-                "is_sent": False,
-                "destin": {
-                    "target_type": target.type,
-                    "target": target.target,
+                'is_sent': False,
+                'destin': {
+                    'target_type': target.type,
+                    'target': target.target,
                 },
-                "detail": "unknown_handler",
+                'detail': 'unknown_handler',
             }
         )
 

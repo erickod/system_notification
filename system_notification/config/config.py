@@ -3,11 +3,11 @@ from collections import defaultdict
 from dynaconf import Dynaconf
 
 settings = Dynaconf(
-    settings_files=["settings.toml", ".secrets.toml"],
+    settings_files=['settings.toml', '.secrets.toml'],
     envvar_prefix=False,
 )
-ENVIRON_TYPE = settings.get("environ_type", "dev")
-SETTINGS = settings.get(ENVIRON_TYPE) or defaultdict(lambda: "missing data")
+ENVIRON_TYPE = settings.get('environ_type', 'dev')
+SETTINGS = settings.get(ENVIRON_TYPE) or defaultdict(lambda: 'missing data')
 
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.

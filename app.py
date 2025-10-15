@@ -19,17 +19,23 @@ from system_notification.infra.http.controller.health_check_controller import (
 from system_notification.infra.http.controller.send_notification_controller import (
     SendNotificationController,
 )
-from system_notification.infra.http.server.fastapi_http_server import FastApiHttpServer
-from system_notification.infra.http.server.flask_http_server import FlaskHttpServer
+from system_notification.infra.http.server.fastapi_http_server import (
+    FastApiHttpServer,
+)
+from system_notification.infra.http.server.flask_http_server import (
+    FlaskHttpServer,
+)
 from tests.infra.http.controller.api_notification_serializer import (
     ApiNotificationSerializer,
 )
 
-server = FastApiHttpServer(app=FastAPI(root_path=f"/{os.environ.get('STAGE', '')}"))
+server = FastApiHttpServer(
+    app=FastAPI(root_path=f"/{os.environ.get('STAGE', '')}")
+)
 # server = FlaskHttpServer()
 factory_caller = NotificationFactoryCaller()
 factory_caller.add_factory(
-    SlackNotificationFactory(slack_token=SETTINGS.get("SLACK_API_TOKEN", ""))
+    SlackNotificationFactory(slack_token=SETTINGS.get('SLACK_API_TOKEN', ''))
 )
 uc = SendNotificationUseCase(factory_caller=factory_caller)
 send_notification_controller = SendNotificationController(
@@ -41,5 +47,5 @@ health_check_controller = HealthCheckController(
     http_server=server,
 )
 handler = Mangum(server._app)
-if __name__ == "__main__":
+if __name__ == '__main__':
     server.serve(port=5000)

@@ -6,7 +6,9 @@ from typing import Any, Dict
 from flask import Flask, Request, Response, request
 
 from system_notification.domain.protocols.controller_protocol import Controller
-from system_notification.infra.http.server.helpers.http_request import HttpRequest
+from system_notification.infra.http.server.helpers.http_request import (
+    HttpRequest,
+)
 
 
 def get_query_params_as_dict(request: Request) -> Dict[Any, Any]:
@@ -20,12 +22,12 @@ def get_query_params_as_dict(request: Request) -> Dict[Any, Any]:
     return query_params
 
 
-def make_func(f, name: str = ""):
+def make_func(f, name: str = ''):
     """Based on http://stackoverflow.com/a/6528148/190597 (Glenn Maynard)"""
     g = types.FunctionType(
         f.__code__,
         f.__globals__,
-        name=f"{name}-{f.__name__}",
+        name=f'{name}-{f.__name__}',
         argdefs=f.__defaults__,
         closure=f.__closure__,
     )
@@ -40,7 +42,7 @@ class FlaskHttpServer:
         self._app = Flask(__name__)
 
     def serve(self, port: int = 8000) -> None:
-        self._app.run(host="0.0.0.0", port=port, debug=self._debug_mode)
+        self._app.run(host='0.0.0.0', port=port, debug=self._debug_mode)
 
     def on(self, method: str, url: str, controller: Controller) -> None:
         async def view() -> Any:
@@ -58,13 +60,13 @@ class FlaskHttpServer:
                 json.dumps(response.body),
                 status=response.status_code,
                 headers=response.headers,
-                content_type="application/json",
+                content_type='application/json',
             )
 
         view.__name__ = controller.__class__.__name__
         self._app.add_url_rule(url, None, view, methods=[method.upper()])
         self._app.add_url_rule(
-            url + "/",
+            url + '/',
             None,
             view,
             methods=[method.upper()],

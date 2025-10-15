@@ -7,7 +7,9 @@ from fastapi import Depends, FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from system_notification.domain.protocols import Controller
-from system_notification.infra.http.server.helpers.http_request import HttpRequest
+from system_notification.infra.http.server.helpers.http_request import (
+    HttpRequest,
+)
 
 
 def get_query_params_as_dict(request: Request) -> Dict[Any, Any]:
@@ -31,7 +33,8 @@ class FastApiHttpServer:
 
     def on(self, method: str, url: str, controller: Controller) -> None:
         async def fastapi_controller(
-            request: Request, params: Dict[Any, Any] = Depends(get_query_params_as_dict)
+            request: Request,
+            params: Dict[Any, Any] = Depends(get_query_params_as_dict),
         ) -> Any:
             application_request = HttpRequest(
                 headers={**request.headers},
@@ -44,7 +47,7 @@ class FastApiHttpServer:
                 status_code=response.status_code,
             )
 
-        def asdf(name: str = "any valid name") -> str:
+        def asdf(name: str = 'any valid name') -> str:
             return name
 
         self._app.add_api_route(

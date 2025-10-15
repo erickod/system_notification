@@ -1,14 +1,18 @@
 from typing import Protocol
 
-from system_notification.infra.http.server.helpers.http_request import HttpRequest
-from system_notification.infra.http.server.helpers.http_response import HttpResponse
+from system_notification.infra.http.server.helpers.http_request import (
+    HttpRequest,
+)
+from system_notification.infra.http.server.helpers.http_response import (
+    HttpResponse,
+)
 
 
 class HttpServer(Protocol):
     def serve(self, port: int = 8000) -> None:
         ...
 
-    def on(self, method: str, url: str, controller: "Controller") -> None:
+    def on(self, method: str, url: str, controller: 'Controller') -> None:
         ...
 
 
